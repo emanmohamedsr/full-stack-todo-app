@@ -6,6 +6,7 @@ import ErrorMessage from "../components/ErrorMessage";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "../validation";
 import axiosInstance from "../config/axios.config";
+import toast from "react-hot-toast";
 
 interface IFormInput {
 	identifier: string;
@@ -30,7 +31,19 @@ const LoginPage = () => {
 		console.log(data);
 		try {
 			const response = await axiosInstance.post("/auth/local", data);
-			console.log(response);
+			if (response.status === 200) {
+				toast.success("Welcome back, " + response.data.user.username, {
+					duration: 3000,
+					position: "bottom-center",
+					style: {
+						backgroundColor: "#6B7280",
+						color: "#ffffff",
+						border: "1px solid #6b7280",
+						borderRadius: "0.5rem",
+						width: "fit-content",
+					},
+				});
+			}
 		} catch (error) {
 			console.error("Login failed:", error);
 		}
