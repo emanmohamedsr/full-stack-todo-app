@@ -3,6 +3,8 @@ import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
 import { REGISTER_FORM_INPUTS } from "../data";
 import ErrorMessage from "../components/ErrorMessage";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { registerSchema } from "../validation";
 
 interface IFormInput {
 	email: string;
@@ -15,17 +17,15 @@ const RegisterPage = () => {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<IFormInput>();
+	} = useForm<IFormInput>({
+		resolver: yupResolver(registerSchema),
+	});
 	// Render
 	const inputs = REGISTER_FORM_INPUTS.map(
-		({ name, placeholder, type, validation }, idx) => (
+		({ name, placeholder, type }, idx) => (
 			<div key={idx}>
-				<Input
-					type={type}
-					placeholder={placeholder}
-					{...register(name, validation)}
-				/>
-				{errors[name] && <ErrorMessage>{errors[name].message}</ErrorMessage>}
+				<Input type={type} placeholder={placeholder} {...register(name)} />
+				{errors[name] && <ErrorMessage>{errors[name]?.message}</ErrorMessage>}
 			</div>
 		),
 	);

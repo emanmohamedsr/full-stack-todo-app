@@ -2,6 +2,9 @@ import { useForm } from "react-hook-form";
 import Button from "../components/ui/Button";
 import Input from "../components/ui/Input";
 import { LOGIN_FORM_INPUTS } from "../data";
+import ErrorMessage from "../components/ErrorMessage";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { loginSchema } from "../validation";
 
 interface IFormInput {
 	identifier: string;
@@ -13,24 +16,14 @@ const LoginPage = () => {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<IFormInput>();
+	} = useForm<IFormInput>({ resolver: yupResolver(loginSchema) });
 	// Render
-	const inputs = LOGIN_FORM_INPUTS.map(
-		({ name, placeholder, type, validation }, idx) => (
-			<div key={idx}>
-				<Input
-					type={type}
-					placeholder={placeholder}
-					{...register(name, validation)}
-				/>
-				{errors[name] && (
-					<span className='mt-1 ml-1 block text-red-700 text-sm'>
-						{errors[name]?.message}
-					</span>
-				)}
-			</div>
-		),
-	);
+	const inputs = LOGIN_FORM_INPUTS.map(({ name, placeholder, type }, idx) => (
+		<div key={idx}>
+			<Input type={type} placeholder={placeholder} {...register(name)} />
+			{errors[name] && <ErrorMessage>{errors[name]?.message}</ErrorMessage>}
+		</div>
+	));
 
 	const formSubmitHandler = (data: IFormInput) => {
 		console.log(data);
