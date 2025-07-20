@@ -7,6 +7,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "../validation";
 import axiosInstance from "../config/axios.config";
 import toast from "react-hot-toast";
+import { useState } from "react";
 
 interface IFormInput {
 	identifier: string;
@@ -19,6 +20,9 @@ const LoginPage = () => {
 		handleSubmit,
 		formState: { errors },
 	} = useForm<IFormInput>({ resolver: yupResolver(loginSchema) });
+
+	const [isLoading, setIsLoading] = useState(false);
+
 	// Render
 	const inputs = LOGIN_FORM_INPUTS.map(({ name, placeholder, type }, idx) => (
 		<div key={idx}>
@@ -28,24 +32,16 @@ const LoginPage = () => {
 	));
 
 	const formSubmitHandler = async (data: IFormInput) => {
-		console.log(data);
+		setIsLoading(true);
 		try {
 			const response = await axiosInstance.post("/auth/local", data);
 			if (response.status === 200) {
-				toast.success("Welcome back, " + response.data.user.username, {
-					duration: 3000,
-					position: "bottom-center",
-					style: {
-						backgroundColor: "#6B7280",
-						color: "#ffffff",
-						border: "1px solid #6b7280",
-						borderRadius: "0.5rem",
-						width: "fit-content",
-					},
-				});
+				toast.success("Welcome back, " + response.data.user.username);
 			}
 		} catch (error) {
 			console.error("Login failed:", error);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 
@@ -59,7 +55,7 @@ const LoginPage = () => {
 					onSubmit={handleSubmit(formSubmitHandler)}
 					className='flex flex-col justify-center align-center space-y-4'>
 					{inputs}
-					<Button type='submit' fullWidth={true}>
+					<Button type='submit' fullWidth={true} isLoading={isLoading}>
 						Login
 					</Button>
 				</form>

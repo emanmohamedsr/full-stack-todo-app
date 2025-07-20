@@ -11,3 +11,9 @@ export interface ILoginInputs {
 	type: string;
 	placeholder: string;
 }
+
+export interface IErrorResponse {
+	error: {
+		message?: string;
+	};
+}
