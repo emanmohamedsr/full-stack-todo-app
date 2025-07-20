@@ -1,28 +1,44 @@
+import { NavLink } from "react-router-dom";
+
 const Navbar = () => {
 	return (
 		<nav className='w-full bg-sky-800 text-white'>
 			<div className='container mx-auto p-4'>
 				<ul className='flex justify-between items-center '>
 					<li>
-						<a href='/' className='hover:underline  md:text-lg font-bold'>
+						<NavLink
+							to='/'
+							className={({ isActive }) =>
+								`hover:underline focus:outline-none  md:text-lg font-bold ${
+									isActive ? "underline" : ""
+								}`
+							}>
 							Home
-						</a>
+						</NavLink>
 					</li>
 					<li className='flex space-x-6'>
 						<div>
-							<a
-								href='/login'
-								className='hover:underline  md:text-lg font-semibold'>
+							<NavLink
+								to='/login'
+								className={({ isActive }) =>
+									`hover:underline focus:outline-none  md:text-lg font-bold ${
+										isActive ? "underline" : ""
+									}`
+								}>
 								Login
-							</a>
+							</NavLink>
 						</div>
 
 						<div>
-							<a
-								href='/register'
-								className='hover:underline  md:text-lg font-semibold'>
+							<NavLink
+								to='/register'
+								className={({ isActive }) =>
+									`hover:underline focus:outline-none  md:text-lg font-bold ${
+										isActive ? "underline" : ""
+									}`
+								}>
 								Register
-							</a>
+							</NavLink>
 						</div>
 					</li>
 				</ul>
