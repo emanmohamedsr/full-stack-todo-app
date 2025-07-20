@@ -5,6 +5,7 @@ import { LOGIN_FORM_INPUTS } from "../data";
 import ErrorMessage from "../components/ErrorMessage";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { loginSchema } from "../validation";
+import axiosInstance from "../config/axios.config";
 
 interface IFormInput {
 	identifier: string;
@@ -25,8 +26,14 @@ const LoginPage = () => {
 		</div>
 	));
 
-	const formSubmitHandler = (data: IFormInput) => {
+	const formSubmitHandler = async (data: IFormInput) => {
 		console.log(data);
+		try {
+			const response = await axiosInstance.post("/auth/local", data);
+			console.log(response);
+		} catch (error) {
+			console.error("Login failed:", error);
+		}
 	};
 
 	return (

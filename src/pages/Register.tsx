@@ -5,6 +5,7 @@ import { REGISTER_FORM_INPUTS } from "../data";
 import ErrorMessage from "../components/ErrorMessage";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from "../validation";
+import axiosInstance from "../config/axios.config";
 
 interface IFormInput {
 	email: string;
@@ -30,8 +31,14 @@ const RegisterPage = () => {
 		),
 	);
 
-	const formSubmitHandler = (data: IFormInput) => {
+	const formSubmitHandler = async (data: IFormInput) => {
 		console.log(data);
+		try {
+			const response = await axiosInstance.post("/auth/local/register", data);
+			console.log(response);
+		} catch (error) {
+			console.error("Registration failed:", error);
+		}
 	};
 
 	return (
