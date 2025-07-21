@@ -22,7 +22,7 @@ export const LOGIN_FORM_INPUTS: ILoginInputs[] = [
 	{
 		name: "identifier",
 		type: "text",
-		placeholder: "Enter your email or username",
+		placeholder: "Enter your email",
 	},
 	{
 		name: "password",

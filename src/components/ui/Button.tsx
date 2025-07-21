@@ -3,21 +3,16 @@ import { type VariantProps, cva } from "class-variance-authority";
 import type { HTMLAttributes, ReactNode } from "react";
 
 const buttonVariants = cva(
-	"flex items-center justify-center rounded-md font-medium text-white duration-300 dark:text-black disabled:bg-gray-500 disabled:cursor-not-allowed cursor-pointer focus:outline-none focus:ring-2 hover:focus:ring-sky-700 focus:ring-sky-800",
+	"flex items-center justify-center rounded-md font-medium duration-300 disabled:cursor-not-allowed cursor-pointer focus:outline-none focus:ring-2 ",
 	{
 		variants: {
 			variant: {
-				// ** FILLED
 				default:
-					"bg-slate-900 dark:bg-sky-800 dark:text-white dark:hover:bg-sky-700",
+					"bg-sky-800 text-white  hover:bg-sky-700 disabled:bg-gray-600 disabled:text-gray-200 focus:ring-sky-800 hover:focus:ring-sky-700",
 				danger:
-					"bg-red-900 dark:bg-[#c2344d] dark:text-white dark:hover:bg-red-700",
+					"bg-red-900 text-white  hover:bg-red-700 disabled:bg-red-800/50 disabled:text-red-100 focus:ring-red-900 hover:focus:ring-red-700",
 				cancel:
-					"bg-gray-300 text-gray-700 dark:bg-[#f5f5fa] dark:text-dark hover:bg-gray-400 dark:hover:bg-gray-200",
-
-				// ** OUTLINE
-				outline:
-					"border border-sky-800 hover:text-white bg-transparent text-black hover:border-transparent hover:bg-sky-800 dark:text-gray-700 dark:hover:text-white",
+					"bg-gray-300 text-gray-700 hover:bg-gray-400 disabled:bg-gray-400/50 disabled:text-gray-500 focus:ring-gray-300 hover:focus:ring-gray-400",
 			},
 			size: {
 				default: "p-3",

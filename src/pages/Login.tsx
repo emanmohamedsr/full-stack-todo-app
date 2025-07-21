@@ -8,6 +8,9 @@ import { loginSchema } from "../validation";
 import axiosInstance from "../config/axios.config";
 import toast from "react-hot-toast";
 import { useState } from "react";
+import type { AxiosError } from "axios";
+import type { IErrorResponse } from "../interfaces";
+import { Link } from "react-router-dom";
 
 interface IFormInput {
 	identifier: string;
@@ -15,16 +18,17 @@ interface IFormInput {
 }
 
 const LoginPage = () => {
+	//** Initialize form with validation schema
 	const {
 		register,
-		reset,
 		handleSubmit,
 		formState: { errors },
 	} = useForm<IFormInput>({ resolver: yupResolver(loginSchema) });
 
+	//** State for loading indicator
 	const [isLoading, setIsLoading] = useState(false);
 
-	// Render
+	//** Render
 	const inputs = LOGIN_FORM_INPUTS.map(({ name, placeholder, type }, idx) => (
 		<div key={idx}>
 			<Input type={type} placeholder={placeholder} {...register(name)} />
@@ -32,17 +36,29 @@ const LoginPage = () => {
 		</div>
 	));
 
+	//** Form submission handler
 	const formSubmitHandler = async (data: IFormInput) => {
 		setIsLoading(true);
 		try {
 			const response = await axiosInstance.post("/auth/local", data);
 			if (response.status === 200) {
-				toast.success("Welcome back, " + response.data.user.username);
+				toast.success(
+					"Welcome back, " +
+						response.data.user.username +
+						"! you will be redirected to the homepage after 2 seconds.",
+				);
+
+				localStorage.setItem("loggedinUserData", JSON.stringify(response.data));
+
+				setTimeout(() => location.replace("/"), 2000);
 			}
 		} catch (error) {
-			console.error("Login failed:", error);
+			const errorObj = error as AxiosError<IErrorResponse>;
+			toast.error(
+				errorObj.response?.data?.error?.message ||
+					"Login failed. Please try again.",
+			);
 		} finally {
-			reset();
 			setIsLoading(false);
 		}
 	};
@@ -61,6 +77,12 @@ const LoginPage = () => {
 						Login
 					</Button>
 				</form>
+				<div className='text-center text-sm flex items-center justify-center text-gray-500 space-x-2'>
+					<p>Don't have an account?</p>
+					<Link to='/register' className='text-sky-800 hover:underline'>
+						Register here
+					</Link>
+				</div>
 			</div>
 		</div>
 	);

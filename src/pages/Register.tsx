@@ -10,7 +10,7 @@ import toast from "react-hot-toast";
 import { useState } from "react";
 import type { AxiosError } from "axios";
 import type { IErrorResponse } from "../interfaces";
-
+import { Link } from "react-router-dom";
 interface IFormInput {
 	email: string;
 	username: string;
@@ -18,18 +18,19 @@ interface IFormInput {
 }
 
 const RegisterPage = () => {
+	//** Initialize form with validation schema
 	const {
 		register,
-		reset,
 		handleSubmit,
 		formState: { errors },
 	} = useForm<IFormInput>({
 		resolver: yupResolver(registerSchema),
 	});
 
+	//** State for loading indicator
 	const [isLoading, setIsLoading] = useState(false);
 
-	// Render
+	//** Render
 	const inputs = REGISTER_FORM_INPUTS.map(
 		({ name, placeholder, type }, idx) => (
 			<div key={idx}>
@@ -39,6 +40,7 @@ const RegisterPage = () => {
 		),
 	);
 
+	//** Form submission handler
 	const formSubmitHandler = async (data: IFormInput) => {
 		setIsLoading(true);
 
@@ -46,11 +48,9 @@ const RegisterPage = () => {
 			const response = await axiosInstance.post("/auth/local/register", data);
 			if (response.status === 200) {
 				toast.success(
-					"Registration successful! You will be redirected to login after 3 seconds.",
+					"Registration successful! You will be redirected to login after 2 seconds.",
 				);
-				setTimeout(() => {
-					window.location.href = "/login";
-				}, 3000);
+				setTimeout(() => location.replace("/login"), 2000);
 			}
 		} catch (error) {
 			const errorObj = error as AxiosError<IErrorResponse>;
@@ -59,7 +59,6 @@ const RegisterPage = () => {
 					"Registration failed. Please try again.",
 			);
 		} finally {
-			reset();
 			setIsLoading(false);
 		}
 	};
@@ -74,10 +73,16 @@ const RegisterPage = () => {
 					onSubmit={handleSubmit(formSubmitHandler)}
 					className='flex flex-col justify-center align-center space-y-4'>
 					{inputs}
-					<Button type='submit' fullWidth={true} isLoading={isLoading}>
+					<Button type='submit' fullWidth isLoading={isLoading}>
 						Register
 					</Button>
 				</form>
+				<div className='text-center text-sm flex items-center justify-center text-gray-500 space-x-2'>
+					<p>Have an account?</p>
+					<Link to='/login' className='text-sky-800 hover:underline'>
+						Login here
+					</Link>
+				</div>
 			</div>
 		</div>
 	);

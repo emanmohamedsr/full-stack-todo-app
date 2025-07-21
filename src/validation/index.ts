@@ -23,7 +23,14 @@ export const registerSchema = yup
 
 export const loginSchema = yup
 	.object({
-		identifier: yup.string().required("Identifier is required"),
+		identifier: yup
+			.string()
+			.required("Email is required")
+			.email("Invalid email address")
+			.matches(
+				/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+				"Invalid email format",
+			),
 		password: yup
 			.string()
 			.required("Password is required")

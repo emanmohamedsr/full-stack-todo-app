@@ -9,13 +9,13 @@ const App = () => {
 			<Toaster
 				position='bottom-center'
 				toastOptions={{
-					duration: 3000,
+					duration: 2000,
 					style: {
-						backgroundColor: "#374151",
-						color: "#fff",
-						border: "1px solid #374151",
-						borderRadius: "0.5rem",
+						background: "#f0fdfa",
+						color: "#075985",
+						border: "1px solid #bae6fd",
 						width: "fit-content",
+						borderRadius: "0.5rem",
 					},
 				}}
 			/>
