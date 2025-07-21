@@ -13,7 +13,11 @@ export const registerSchema = yup
 		email: yup
 			.string()
 			.required("Email is required")
-			.email("Invalid email address"),
+			.email("Invalid email address")
+			.matches(
+				/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+				"Invalid email format",
+			),
 	})
 	.required();
 

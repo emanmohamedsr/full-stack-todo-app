@@ -20,6 +20,7 @@ interface IFormInput {
 const RegisterPage = () => {
 	const {
 		register,
+		reset,
 		handleSubmit,
 		formState: { errors },
 	} = useForm<IFormInput>({
@@ -58,6 +59,7 @@ const RegisterPage = () => {
 					"Registration failed. Please try again.",
 			);
 		} finally {
+			reset();
 			setIsLoading(false);
 		}
 	};

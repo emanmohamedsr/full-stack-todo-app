@@ -17,6 +17,7 @@ interface IFormInput {
 const LoginPage = () => {
 	const {
 		register,
+		reset,
 		handleSubmit,
 		formState: { errors },
 	} = useForm<IFormInput>({ resolver: yupResolver(loginSchema) });
@@ -41,6 +42,7 @@ const LoginPage = () => {
 		} catch (error) {
 			console.error("Login failed:", error);
 		} finally {
+			reset();
 			setIsLoading(false);
 		}
 	};
