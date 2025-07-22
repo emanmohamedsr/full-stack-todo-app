@@ -1,9 +1,8 @@
 import { NavLink } from "react-router-dom";
+import { getUserData } from "../utils/getUserData";
 
 const Navbar = () => {
-	const storageKey = "loggedinUserData";
-	const userDataString = localStorage.getItem(storageKey);
-	const userData = userDataString ? JSON.parse(userDataString) : null;
+	const userData = getUserData();
 	return (
 		<nav className='w-full bg-sky-800 text-white'>
 			<div className='container mx-auto p-4'>

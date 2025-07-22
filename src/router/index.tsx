@@ -12,9 +12,6 @@ import ProfilePage from "../pages/Profile";
 import LogoutPage from "../pages/Logout";
 import ErrorHandler from "../components/error/ErrorHandler";
 import PageNotFound from "../pages/PageNotFound";
-import { getUserData } from "../utils/getUserData";
-
-const userData = getUserData();
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -23,10 +20,7 @@ const router = createBrowserRouter(
 				<Route
 					index
 					element={
-						<ProtectedRoute
-							isAllowed={userData?.jwt}
-							data={userData}
-							redirectPath='/login'>
+						<ProtectedRoute requireAuth redirectPath='/login'>
 							<HomePage />
 						</ProtectedRoute>
 					}
@@ -34,10 +28,7 @@ const router = createBrowserRouter(
 				<Route
 					path='login'
 					element={
-						<ProtectedRoute
-							isAllowed={!userData?.jwt}
-							data={userData}
-							redirectPath='/'>
+						<ProtectedRoute requireAuth={false} redirectPath='/'>
 							<LoginPage />
 						</ProtectedRoute>
 					}
@@ -45,10 +36,7 @@ const router = createBrowserRouter(
 				<Route
 					path='register'
 					element={
-						<ProtectedRoute
-							isAllowed={!userData?.jwt}
-							data={userData}
-							redirectPath='/login'>
+						<ProtectedRoute requireAuth={false} redirectPath='/'>
 							<RegisterPage />
 						</ProtectedRoute>
 					}
@@ -56,10 +44,7 @@ const router = createBrowserRouter(
 				<Route
 					path='profile'
 					element={
-						<ProtectedRoute
-							isAllowed={userData?.jwt}
-							data={userData}
-							redirectPath='/login'>
+						<ProtectedRoute requireAuth redirectPath='/login'>
 							<ProfilePage />
 						</ProtectedRoute>
 					}
@@ -67,10 +52,7 @@ const router = createBrowserRouter(
 				<Route
 					path='logout'
 					element={
-						<ProtectedRoute
-							isAllowed={userData?.jwt}
-							data={userData}
-							redirectPath='/login'>
+						<ProtectedRoute requireAuth redirectPath='/login'>
 							<LogoutPage />
 						</ProtectedRoute>
 					}
