@@ -20,5 +20,6 @@ export interface IErrorResponse {
 
 export interface ITodo {
 	id: number;
+	doucmentId: string;
 	title: string;
 }

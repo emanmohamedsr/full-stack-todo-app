@@ -12,10 +12,9 @@ import ProfilePage from "../pages/Profile";
 import LogoutPage from "../pages/Logout";
 import ErrorHandler from "../components/error/ErrorHandler";
 import PageNotFound from "../pages/PageNotFound";
+import { getUserData } from "../utils/getUserData";
 
-const storageKey = "loggedinUserData";
-const userDataString = localStorage.getItem(storageKey);
-const userData = userDataString ? JSON.parse(userDataString) : null;
+const userData = getUserData();
 
 const router = createBrowserRouter(
 	createRoutesFromElements(

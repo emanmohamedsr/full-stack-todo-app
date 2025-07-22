@@ -1,7 +1,7 @@
+import { getUserData } from "../utils/getUserData";
+
 const ProfilePage = () => {
-	const storageKey = "loggedinUserData";
-	const userDataString = localStorage.getItem(storageKey);
-	const userData = userDataString ? JSON.parse(userDataString) : null;
+	const userData = getUserData();
 
 	return (
 		<div className='w-full flex items-center justify-center min-h-[calc(100vh-60px)] px-4'>
