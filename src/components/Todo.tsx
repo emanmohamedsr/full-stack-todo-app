@@ -16,12 +16,22 @@ const Todo = ({ todo }: TodoProps) => {
 	const userData = getUserData();
 	const [isUpdating, setIsUpdating] = useState(false);
 	const [isOpenEditModal, setIsOpenEditModal] = useState(false);
-	//** Modal Handlers */
+	//** Edit Modal Handlers */
 	const closeEditModal = () => {
 		setIsOpenEditModal(false);
 	};
 	const openEditModal = () => {
 		setIsOpenEditModal(true);
+	};
+
+	const [isDeleting, setIsDeleting] = useState(false);
+	const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
+	//** Delete Modal Handlers */
+	const closeDeleteModal = () => {
+		setIsOpenDeleteModal(false);
+	};
+	const openDeleteModal = () => {
+		setIsOpenDeleteModal(true);
 	};
 
 	//** Edit handlers */
@@ -59,6 +69,32 @@ const Todo = ({ todo }: TodoProps) => {
 		closeEditModal();
 	};
 
+	//** Delete handlers */
+	const handleSubmitDeleteTodo = async () => {
+		setIsDeleting(true);
+		try {
+			const res = await axiosInstance.delete(`/todos/${todo.documentId}`, {
+				headers: {
+					Authorization: `Bearer ${userData?.jwt}`,
+				},
+			});
+			if (res.status === 204) {
+				toast.success("Todo deleted successfully!");
+			}
+		} catch (error) {
+			const errorObj = error as AxiosError<IErrorResponse>;
+			toast.error(
+				errorObj.response?.data?.error?.message || "Failed to delete todo",
+			);
+		} finally {
+			setIsDeleting(false);
+			closeDeleteModal();
+		}
+	};
+	const handleCancelDeleteTodo = () => {
+		closeDeleteModal();
+	};
+
 	return (
 		<>
 			<div className='bg-white p-4 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-all duration-200 flex items-center justify-between'>
@@ -74,7 +110,7 @@ const Todo = ({ todo }: TodoProps) => {
 					<Button size='sm' onClick={openEditModal}>
 						Edit
 					</Button>
-					<Button variant='danger' size='sm'>
+					<Button variant='danger' size='sm' onClick={openDeleteModal}>
 						Remove
 					</Button>
 				</div>
@@ -90,6 +126,24 @@ const Todo = ({ todo }: TodoProps) => {
 					handleCancelModal={handleCancelEditModal}
 					handleSubmitModal={handleSubmitEditModal}
 				/>
+			</Modal>
+			<Modal
+				isOpen={isOpenDeleteModal}
+				close={closeDeleteModal}
+				title='🔔 Deleting a todo'
+				description='Are you sure you want to delete this todo?'>
+				<div className='flex items-center space-x-2'>
+					<Button
+						variant={"danger"}
+						size='sm'
+						onClick={handleSubmitDeleteTodo}
+						isLoading={isDeleting}>
+						Delete
+					</Button>
+					<Button onClick={handleCancelDeleteTodo} variant={"cancel"} size='sm'>
+						Cancel
+					</Button>
+				</div>
 			</Modal>
 		</>
 	);
