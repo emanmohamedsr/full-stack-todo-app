@@ -12,7 +12,7 @@ const buttonVariants = cva(
 				danger:
 					"bg-red-900 text-white  hover:bg-red-700 disabled:bg-red-800/50 disabled:text-red-100 focus:ring-red-900 hover:focus:ring-red-700",
 				cancel:
-					"bg-gray-300 text-gray-700 hover:bg-gray-400 disabled:bg-gray-400/50 disabled:text-gray-500 focus:ring-gray-300 hover:focus:ring-gray-400",
+					"bg-gray-400 text-white hover:bg-gray-500 disabled:bg-gray-500/50 disabled:text-gray-600 focus:ring-gray-400 hover:focus:ring-gray-400",
 			},
 			size: {
 				default: "p-3",

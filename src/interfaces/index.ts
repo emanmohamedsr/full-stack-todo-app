@@ -20,6 +20,12 @@ export interface IErrorResponse {
 
 export interface ITodo {
 	id: number;
-	doucmentId: string;
+	documentId: string;
 	title: string;
+	description?: string;
+}
+
+export interface IFormInput {
+	title: string;
+	description?: string;
 }
