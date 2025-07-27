@@ -6,23 +6,24 @@ import { useState } from "react";
 import Modal from "../components/ui/Modal";
 import TodoForm from "../components/TodoForm";
 import HomePageSkeleton from "../components/HomePageSkeleton";
-import type { IErrorResponse, IFormInput, ITodo } from "../interfaces";
+import type { IErrorResponse, IFormInput } from "../interfaces";
 import axiosInstance from "../config/axios.config";
 import toast from "react-hot-toast";
 import type { AxiosError } from "axios";
-import { useQueryClient } from "@tanstack/react-query";
+import { faker } from "@faker-js/faker";
 
 const HomePage = () => {
 	const userData = getUserData();
-	const queryClient = useQueryClient();
+	const [queryVersion, setQueryVersion] = useState(0);
 	const { data, isLoading, error } = useCustomQuery({
-		queryKey: ["todos"],
+		queryKey: ["todos", queryVersion.toString()],
 		url: `/users/me?populate=todos`,
 		config: { headers: { Authorization: `Bearer ${userData?.jwt}` } },
 	});
 
 	//** Add Modal Handlers */
 	const [isAdding, setIsAdding] = useState(false);
+	const [isGeneratingFakeTodos, setIsGeneratingFakeTodos] = useState(false);
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
 	const closeAddModal = () => {
 		setIsOpenAddModal(false);
@@ -52,15 +53,7 @@ const HomePage = () => {
 			);
 			if (res.status === 200) {
 				toast.success("Todo created successfully!");
-				queryClient.setQueryData(
-					["todos"],
-					(oldData: { todos: ITodo[] } | undefined) => {
-						return {
-							...oldData,
-							todos: oldData?.todos.concat(res.data.data),
-						};
-					},
-				);
+				setQueryVersion((prev) => prev + 1);
 			}
 		} catch (error) {
 			const errorObj = error as AxiosError<IErrorResponse>;
@@ -70,6 +63,38 @@ const HomePage = () => {
 		} finally {
 			setIsAdding(false);
 			closeAddModal();
+		}
+	};
+
+	const generateFakeTodos = async () => {
+		setIsGeneratingFakeTodos(true);
+		try {
+			for (let i = 0; i < 50; i++) {
+				try {
+					await axiosInstance.post(
+						"/todos",
+						{
+							data: {
+								title: faker.word.words(3),
+								description: faker.lorem.sentences().slice(0, 30),
+							},
+						},
+						{
+							headers: {
+								Authorization: `Bearer ${userData?.jwt}`,
+							},
+						},
+					);
+				} catch (error) {
+					console.log(error);
+				}
+			}
+		} catch (error) {
+			console.log(error);
+		} finally {
+			setIsGeneratingFakeTodos(false);
+			toast.success("50 fake todos generated successfully!");
+			setQueryVersion((prev) => prev + 1);
 		}
 	};
 
@@ -87,7 +112,15 @@ const HomePage = () => {
 					</span>{" "}
 					!
 				</h1>
-				<Button onClick={openAddModal}>Add Todo</Button>
+				<div className='flex items-center space-x-2'>
+					<Button onClick={openAddModal}>Add Todo</Button>
+					<Button
+						variant={"cancel"}
+						isLoading={isGeneratingFakeTodos}
+						onClick={generateFakeTodos}>
+						{isGeneratingFakeTodos ? "Generating..." : "Generate 50 Fake Todos"}
+					</Button>
+				</div>
 				<Modal
 					isOpen={isOpenAddModal}
 					close={closeAddModal}
@@ -102,7 +135,7 @@ const HomePage = () => {
 			</header>
 			<div>
 				{data?.todos.length > 0 ? (
-					<Todos todos={data?.todos} />
+					<Todos todos={data?.todos} setQueryVersion={setQueryVersion} />
 				) : (
 					<p className='text-gray-500 mt-6 text-center'>
 						No todos found. Please add some!

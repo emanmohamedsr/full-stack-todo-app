@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type Dispatch } from "react";
 import type { IErrorResponse, IFormInput, ITodo } from "../interfaces";
 import Button from "./ui/Button";
 import Modal from "./ui/Modal";
@@ -7,15 +7,13 @@ import { getUserData } from "../utils/getUserData";
 import toast from "react-hot-toast";
 import type { AxiosError } from "axios";
 import TodoForm from "./TodoForm";
-import { useQueryClient } from "@tanstack/react-query";
 
 interface TodoProps {
 	todo: ITodo;
+	setQueryVersion: Dispatch<React.SetStateAction<number>>;
 }
 
-const Todo = ({ todo }: TodoProps) => {
-	const queryClient = useQueryClient();
-
+const Todo = ({ todo, setQueryVersion }: TodoProps) => {
 	const userData = getUserData();
 
 	//** Edit Modal Handlers */
@@ -58,17 +56,7 @@ const Todo = ({ todo }: TodoProps) => {
 			);
 			if (res.status === 200) {
 				toast.success("Todo updated successfully!");
-				queryClient.setQueryData(
-					["todos"],
-					(oldData: { todos: ITodo[] } | undefined) => {
-						return {
-							...oldData,
-							todos: oldData?.todos.map((t: ITodo) =>
-								t.documentId === todo.documentId ? { ...t, ...data } : t,
-							),
-						};
-					},
-				);
+				setQueryVersion((prev) => prev + 1);
 			}
 		} catch (error) {
 			const errorObj = error as AxiosError<IErrorResponse>;
@@ -95,17 +83,7 @@ const Todo = ({ todo }: TodoProps) => {
 			});
 			if (res.status === 204) {
 				toast.success("Todo deleted successfully!");
-				queryClient.setQueryData(
-					["todos"],
-					(oldData: { todos: ITodo[] } | undefined) => {
-						return {
-							...oldData,
-							todos: oldData?.todos.filter(
-								(t: ITodo) => t.documentId !== todo.documentId,
-							),
-						};
-					},
-				);
+				setQueryVersion((prev) => prev + 1);
 			}
 		} catch (error) {
 			const errorObj = error as AxiosError<IErrorResponse>;
