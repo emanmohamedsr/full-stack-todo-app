@@ -43,7 +43,7 @@ const TodoForm = ({
 			)}
 			<div className='flex items-center space-x-2'>
 				<Button isLoading={isLoading} type='submit' size='sm'>
-					Update
+					{todo ? "Update" : "Create"}
 				</Button>
 				<Button
 					type='button'

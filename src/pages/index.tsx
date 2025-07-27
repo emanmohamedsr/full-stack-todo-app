@@ -1,27 +1,115 @@
 import Todos from "../components/Todos";
-import TodosSkeleton from "../components/TodosSkeleton";
 import { getUserData } from "../utils/getUserData";
-import useAuthenticatedQuery from "../hooks/useAuthenticatedQuery";
+import useCustomQuery from "../hooks/useCustomQuery";
+import Button from "../components/ui/Button";
+import { useState } from "react";
+import Modal from "../components/ui/Modal";
+import TodoForm from "../components/TodoForm";
+import HomePageSkeleton from "../components/HomePageSkeleton";
+import type { IErrorResponse, IFormInput, ITodo } from "../interfaces";
+import axiosInstance from "../config/axios.config";
+import toast from "react-hot-toast";
+import type { AxiosError } from "axios";
+import { useQueryClient } from "@tanstack/react-query";
 
 const HomePage = () => {
 	const userData = getUserData();
-
-	const { data, isLoading, error } = useAuthenticatedQuery({
+	const queryClient = useQueryClient();
+	const { data, isLoading, error } = useCustomQuery({
 		queryKey: ["todos"],
 		url: `/users/me?populate=todos`,
 		config: { headers: { Authorization: `Bearer ${userData?.jwt}` } },
 	});
 
-	if (isLoading) return <TodosSkeleton />;
+	//** Add Modal Handlers */
+	const [isAdding, setIsAdding] = useState(false);
+	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
+	const closeAddModal = () => {
+		setIsOpenAddModal(false);
+	};
+	const openAddModal = () => {
+		setIsOpenAddModal(true);
+	};
+
+	const handleCancelAddModal = () => {
+		closeAddModal();
+	};
+	const handleSubmitAddModal = async (data: IFormInput) => {
+		setIsAdding(true);
+		try {
+			const res = await axiosInstance.post(
+				"/todos",
+				{
+					data: {
+						...data,
+					},
+				},
+				{
+					headers: {
+						Authorization: `Bearer ${userData?.jwt}`,
+					},
+				},
+			);
+			if (res.status === 200) {
+				toast.success("Todo created successfully!");
+				queryClient.setQueryData(
+					["todos"],
+					(oldData: { todos: ITodo[] } | undefined) => {
+						return {
+							...oldData,
+							todos: oldData?.todos.concat(res.data.data),
+						};
+					},
+				);
+			}
+		} catch (error) {
+			const errorObj = error as AxiosError<IErrorResponse>;
+			toast.error(
+				errorObj.response?.data?.error.message || "Something went wrong",
+			);
+		} finally {
+			setIsAdding(false);
+			closeAddModal();
+		}
+	};
+
+	if (isLoading) return <HomePageSkeleton />;
 	if (error) {
 		throw error;
 	}
-	return data?.todos.length > 0 ? (
-		<Todos todos={data?.todos} />
-	) : (
-		<p className='text-gray-500 mt-6 text-center'>
-			No todos found. Please add some!
-		</p>
+	return (
+		<div className='w-full mt-6 px-4 space-y-4'>
+			<header className='w-full flex items-center justify-between'>
+				<h1 className='font-semibold text-gray-800'>
+					Welcome back{" "}
+					<span className='text-lg text-amber-600'>
+						{userData?.user.username || "USER"}
+					</span>{" "}
+					!
+				</h1>
+				<Button onClick={openAddModal}>Add Todo</Button>
+				<Modal
+					isOpen={isOpenAddModal}
+					close={closeAddModal}
+					title='Add Todo'
+					description='Add a new todo item'>
+					<TodoForm
+						isLoading={isAdding}
+						handleCancelModal={handleCancelAddModal}
+						handleSubmitModal={handleSubmitAddModal}
+					/>
+				</Modal>
+			</header>
+			<div>
+				{data?.todos.length > 0 ? (
+					<Todos todos={data?.todos} />
+				) : (
+					<p className='text-gray-500 mt-6 text-center'>
+						No todos found. Please add some!
+					</p>
+				)}
+			</div>
+		</div>
 	);
 };
 

@@ -8,11 +8,7 @@ interface IAuthenticatedQuery {
 	config?: AxiosRequestConfig;
 }
 
-const useAuthenticatedQuery = ({
-	queryKey,
-	url,
-	config,
-}: IAuthenticatedQuery) =>
+const useCustomQuery = ({ queryKey, url, config }: IAuthenticatedQuery) =>
 	useQuery({
 		queryKey,
 		queryFn: async () => {
@@ -21,4 +17,4 @@ const useAuthenticatedQuery = ({
 		},
 	});
 
-export default useAuthenticatedQuery;
+export default useCustomQuery;

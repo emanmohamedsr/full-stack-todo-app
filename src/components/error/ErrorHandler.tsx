@@ -34,13 +34,6 @@ const ErrorHandler = ({
 		(error as Error)?.message ||
 		defaultTitle;
 
-	// Optional: Log errors to monitoring service
-	useEffect(() => {
-		if (error) {
-			console.error("Route Error:", error);
-			// Sentry.captureException(error);
-		}
-	}, [error]);
 
 	// Special handling for 401 errors
 	useEffect(() => {
