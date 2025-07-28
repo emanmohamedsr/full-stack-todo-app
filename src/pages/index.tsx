@@ -10,7 +10,6 @@ import type { IErrorResponse, IFormInput } from "../interfaces";
 import axiosInstance from "../config/axios.config";
 import toast from "react-hot-toast";
 import type { AxiosError } from "axios";
-import { faker } from "@faker-js/faker";
 
 const HomePage = () => {
 	const userData = getUserData();
@@ -23,7 +22,6 @@ const HomePage = () => {
 
 	//** Add Modal Handlers */
 	const [isAdding, setIsAdding] = useState(false);
-	const [isGeneratingFakeTodos, setIsGeneratingFakeTodos] = useState(false);
 	const [isOpenAddModal, setIsOpenAddModal] = useState(false);
 	const closeAddModal = () => {
 		setIsOpenAddModal(false);
@@ -66,38 +64,6 @@ const HomePage = () => {
 		}
 	};
 
-	const generateFakeTodos = async () => {
-		setIsGeneratingFakeTodos(true);
-		try {
-			for (let i = 0; i < 50; i++) {
-				try {
-					await axiosInstance.post(
-						"/todos",
-						{
-							data: {
-								title: faker.word.words(3),
-								description: faker.lorem.sentences().slice(0, 30),
-							},
-						},
-						{
-							headers: {
-								Authorization: `Bearer ${userData?.jwt}`,
-							},
-						},
-					);
-				} catch (error) {
-					console.log(error);
-				}
-			}
-		} catch (error) {
-			console.log(error);
-		} finally {
-			setIsGeneratingFakeTodos(false);
-			toast.success("50 fake todos generated successfully!");
-			setQueryVersion((prev) => prev + 1);
-		}
-	};
-
 	if (isLoading) return <HomePageSkeleton />;
 	if (error) {
 		throw error;
@@ -112,15 +78,7 @@ const HomePage = () => {
 					</span>{" "}
 					!
 				</h1>
-				<div className='flex items-center space-x-2'>
-					<Button onClick={openAddModal}>Add Todo</Button>
-					<Button
-						variant={"cancel"}
-						isLoading={isGeneratingFakeTodos}
-						onClick={generateFakeTodos}>
-						{isGeneratingFakeTodos ? "Generating..." : "Generate 50 Fake Todos"}
-					</Button>
-				</div>
+				<Button onClick={openAddModal}>Add Todo</Button>
 				<Modal
 					isOpen={isOpenAddModal}
 					close={closeAddModal}
