@@ -9,7 +9,7 @@ const HomePageSkeleton = () => {
 	));
 	return (
 		<div className='w-full mt-6 px-4 space-y-4'>
-			<div className='w-full flex items-center justify-between'>
+			<div className='w-full flex items-center justify-between animate-pulse'>
 				<div className='h-4 w-1/4 rounded bg-gray-200'></div>
 				<div className='flex space-x-2'>
 					<div className='h-10 w-20 rounded bg-gray-200'></div>
