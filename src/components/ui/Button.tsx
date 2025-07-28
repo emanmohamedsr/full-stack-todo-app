@@ -8,11 +8,15 @@ const buttonVariants = cva(
 		variants: {
 			variant: {
 				default:
-					"bg-sky-800 text-white  hover:bg-sky-700 disabled:bg-gray-600 disabled:text-gray-200 focus:ring-sky-800 hover:focus:ring-sky-700",
+					"bg-sky-800 text-white border border-sky-800 hover:bg-sky-700 hover:border-sky-700 disabled:bg-gray-600 disabled:text-gray-200 focus:ring-sky-800 hover:focus:ring-sky-700",
+				primary:
+					"bg-white text-sky-800 border border-sky-800 hover:bg-sky-800 hover:border-sky-800 hover:text-white disabled:bg-gray-600 disabled:text-gray-200 focus:ring-sky-800 hover:focus:ring-sky-800",
+				secondary:
+					"bg-white text-amber-600 border border-amber-600 hover:bg-amber-600 hover:border-amber-600 hover:text-white disabled:bg-gray-600 disabled:text-gray-200 focus:ring-amber-600 hover:focus:ring-amber-600",
 				danger:
-					"bg-red-900 text-white  hover:bg-red-700 disabled:bg-red-800/50 disabled:text-red-100 focus:ring-red-900 hover:focus:ring-red-700",
+					"bg-red-900 text-white border border-red-900 hover:bg-red-700 hover:border-red-700 disabled:bg-red-800/50 disabled:text-red-100 focus:ring-red-900 hover:focus:ring-red-700",
 				cancel:
-					"bg-gray-400 text-white hover:bg-gray-500 disabled:bg-gray-500/50 disabled:text-gray-600 focus:ring-gray-400 hover:focus:ring-gray-400",
+					"bg-gray-400 text-white border border-gray-400 hover:border-gray-500 hover:bg-gray-500 disabled:bg-gray-500/50 disabled:text-gray-600 focus:ring-gray-400 hover:focus:ring-gray-400",
 			},
 			size: {
 				default: "p-3",

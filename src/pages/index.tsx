@@ -10,6 +10,7 @@ import type { IErrorResponse, IFormInput } from "../interfaces";
 import axiosInstance from "../config/axios.config";
 import toast from "react-hot-toast";
 import type { AxiosError } from "axios";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
 	const userData = getUserData();
@@ -19,6 +20,7 @@ const HomePage = () => {
 		url: `/users/me?populate=todos`,
 		config: { headers: { Authorization: `Bearer ${userData?.jwt}` } },
 	});
+	const navigate = useNavigate();
 
 	//** Add Modal Handlers */
 	const [isAdding, setIsAdding] = useState(false);
@@ -65,9 +67,7 @@ const HomePage = () => {
 	};
 
 	if (isLoading) return <HomePageSkeleton />;
-	if (error) {
-		throw error;
-	}
+	if (error) throw error;
 	return (
 		<div className='w-full mt-6 px-4 space-y-4'>
 			<header className='w-full flex items-center justify-between'>
@@ -78,7 +78,14 @@ const HomePage = () => {
 					</span>{" "}
 					!
 				</h1>
-				<Button onClick={openAddModal}>Add Todo</Button>
+				<div className='flex items-center space-x-2'>
+					<Button onClick={() => navigate("/fake-todos")} variant={"secondary"}>
+						Go to Fake Todos
+					</Button>
+					<Button onClick={openAddModal} variant={"primary"}>
+						Add Todo
+					</Button>
+				</div>
 				<Modal
 					isOpen={isOpenAddModal}
 					close={closeAddModal}

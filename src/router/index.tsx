@@ -12,6 +12,7 @@ import ProfilePage from "../pages/Profile";
 import LogoutPage from "../pages/Logout";
 import ErrorHandler from "../components/error/ErrorHandler";
 import PageNotFound from "../pages/PageNotFound";
+import FakeTodosPage from "../pages/FakeTodos";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -54,6 +55,14 @@ const router = createBrowserRouter(
 					element={
 						<ProtectedRoute requireAuth redirectPath='/login'>
 							<LogoutPage />
+						</ProtectedRoute>
+					}
+				/>
+				<Route
+					path='/fake-todos'
+					element={
+						<ProtectedRoute requireAuth redirectPath='/login'>
+							<FakeTodosPage />
 						</ProtectedRoute>
 					}
 				/>
