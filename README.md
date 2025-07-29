@@ -162,16 +162,6 @@ Before running this project, make sure you have:
 4. **Open your browser**
    Navigate to `http://localhost:5173`
 
-## Usage
-
-### Getting Started
-
-1. **Register** a new account or **Login** with existing credentials
-2. **Create todos** using the "Add Todo" button
-3. **Manage todos** - Edit, update, or delete existing todos
-4. **Navigate** through paginated todo lists
-5. **Sort** and **filter** todos based on your preferences
-
 ### Key Features
 
 - **Authentication**: Secure login/logout with JWT tokens
