@@ -34,10 +34,11 @@ const ErrorHandler = ({
 		(error as Error)?.message ||
 		defaultTitle;
 
-
 	// Special handling for 401 errors
 	useEffect(() => {
 		if (statusCode === 401) {
+			const storageKey = "loggedinUserData";
+			localStorage.removeItem(storageKey);
 			toast.error("Session expired. Please login again.");
 		}
 	}, [statusCode]);

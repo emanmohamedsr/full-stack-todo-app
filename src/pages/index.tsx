@@ -80,7 +80,7 @@ const HomePage = () => {
 				</h1>
 				<div className='flex items-center space-x-2'>
 					<Button onClick={() => navigate("/fake-todos")} variant={"secondary"}>
-						Go to Fake Todos
+						Go To All Users Todos
 					</Button>
 					<Button onClick={openAddModal} variant={"primary"}>
 						Add Todo
