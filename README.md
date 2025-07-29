@@ -320,4 +320,44 @@ The application uses JWT-based authentication with:
 
 ---
 
+## Here are some screenshots of the app in action:
+
+### Register Page
+
+![Register Page](src/assets/register.png)
+
+### Login Page
+
+![Login Page](src/assets/login.png)
+
+### Profile Page
+
+![Profile](src/assets/profile.png)
+
+### Logout Page
+
+![Logout Page](src/assets/logout.png)
+
+### Add Todo
+
+![Toast](src/assets/add2.png)
+![Modal](src/assets/add1.png)
+
+### Edit Todo
+
+![Modal](src/assets/edit1.png)
+![Toast](src/assets/edit2.png)
+
+### Delete Todo
+
+![Modal](src/assets/delete1.png)
+![Toast](src/assets/delete2.png)
+
+### Show ALL Users Todos
+
+![Button](src/assets/all1.png)
+![Page](src/assets/all2.png)
+![Page Size Pagination](src/assets/all3.png)
+![Sort](src/assets/all4.png)
+
 **Built with ❤️ using React 19 and TypeScript**
