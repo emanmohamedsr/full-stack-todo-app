@@ -2,9 +2,31 @@
 
 A modern, full-featured todo application built with React 19 and TypeScript, featuring user authentication, CRUD operations, pagination, sorting, and responsive design.
 
-## Live Demo
+---
 
-[Add your live demo URL here]
+## ** Backend API **
+
+This project connects to a backend powered by **Strapi v4** with SQLite as the database.
+
+> To run your own backend locally:
+
+1. Clone the [Strapi Backend Repo](https://github.com/emanmohamedsr/strapi-todo-db)
+2. Follow the `README.md` there to start the server.
+3. Once running, update your `.env` file in this frontend project with the correct backend URL.
+
+---
+
+## Usage
+
+1. Make sure your Strapi backend is running at http://localhost:1337
+2. Start the React frontend project
+3. Register as a new user
+4. Log in with your credentials
+5. Create new todos
+6. Edit or delete existing todos
+7. Navigate, sort, and paginate all todo list
+
+---
 
 ## Table of Contents
 
