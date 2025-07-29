@@ -34,7 +34,6 @@ This project connects to a backend powered by **Strapi v4** with SQLite as the d
 - [Tech Stack](#tech-stack)
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
-- [Usage](#usage)
 - [Project Structure](#project-structure)
 - [API Integration](#api-integration)
 - [Authentication](#authentication)
