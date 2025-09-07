@@ -2,7 +2,21 @@
 
 A modern, full-featured todo application built with React 19 and TypeScript, featuring user authentication, CRUD operations, pagination, sorting, and responsive design.
 
----
+
+## Table of Contents
+
+- [Backend API](#backend-api)
+- [Usage](#usage)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Prerequisites](#prerequisites)
+- [Installation](#installation)
+- [Project Structure](#project-structure)
+- [API Integration](#api-integration)
+- [Authentication](#authentication)
+- [Components](#components)
+- [Contributing](#contributing)
+- [Screenshots](#screenshots)
 
 <div align="center">
    <a href="https://drive.google.com/file/d/10SHhKFICF2e-5BCunj0n3F2GpjdvvLN1/view?usp=sharing" target="_blank">
@@ -22,8 +36,6 @@ This project connects to a backend powered by **Strapi v4** with SQLite as the d
 2. Follow the `README.md` there to start the server.
 3. Once running, update your `.env` file in this frontend project with the correct backend URL.
 
----
-
 ## Usage
 
 1. Make sure your Strapi backend is running at http://localhost:1337
@@ -33,21 +45,6 @@ This project connects to a backend powered by **Strapi v4** with SQLite as the d
 5. Create new todos
 6. Edit or delete existing todos
 7. Navigate, sort, and paginate all todo list
-
----
-
-## Table of Contents
-
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [API Integration](#api-integration)
-- [Authentication](#authentication)
-- [Components](#components)
-- [Contributing](#contributing)
 
 ## Features
 
@@ -169,16 +166,6 @@ Before running this project, make sure you have:
 
 4. **Open your browser**
    Navigate to `http://localhost:5173`
-
-## Usage
-
-### Getting Started
-
-1. **Register** a new account or **Login** with existing credentials
-2. **Create todos** using the "Add Todo" button
-3. **Manage todos** - Edit, update, or delete existing todos
-4. **Navigate** through paginated todo lists
-5. **Sort** and **filter** todos based on your preferences
 
 ### Key Features
 
@@ -328,7 +315,7 @@ The application uses JWT-based authentication with:
 
 ---
 
-## Here are some screenshots of the app in action:
+## Screenshots
 
 ### Register Page
 
