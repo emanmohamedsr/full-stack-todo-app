@@ -2,6 +2,15 @@
 
 A modern, full-featured todo application built with React 19 and TypeScript, featuring user authentication, CRUD operations, pagination, sorting, and responsive design.
 
+---
+
+<div align="center">
+   <a href="https://drive.google.com/file/d/10SHhKFICF2e-5BCunj0n3F2GpjdvvLN1/view?usp=sharing" target="_blank">
+      <span style="display:inline-block;margin-top:12px;padding:8px 20px;background:#2563eb;color:#fff;border-radius:6px;font-weight:600;font-size:1.1em;text-decoration:none;box-shadow:0 2px 8px #2563eb33;">🎥 Watch Demo Video</span>
+   </a>
+</div>
+
+---
 
 ## Table of Contents
 
@@ -17,14 +26,6 @@ A modern, full-featured todo application built with React 19 and TypeScript, fea
 - [Components](#components)
 - [Contributing](#contributing)
 - [Screenshots](#screenshots)
-
-<div align="center">
-   <a href="https://drive.google.com/file/d/10SHhKFICF2e-5BCunj0n3F2GpjdvvLN1/view?usp=sharing" target="_blank">
-      <span style="display:inline-block;margin-top:12px;padding:8px 20px;background:#2563eb;color:#fff;border-radius:6px;font-weight:600;font-size:1.1em;text-decoration:none;box-shadow:0 2px 8px #2563eb33;">🎥 Watch Demo Video</span>
-   </a>
-</div>
-
----
 
 ## ** Backend API **
 
